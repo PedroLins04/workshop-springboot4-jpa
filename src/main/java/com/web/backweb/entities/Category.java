@@ -1,8 +1,7 @@
 package com.web.backweb.entities;
 
-import com.web.backweb.repositories.CategoryRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -19,6 +18,8 @@ public class Category implements Serializable {
     private Long Id;
     private String Name;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
     //CONSTRUCTORS
