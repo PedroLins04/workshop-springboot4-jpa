@@ -1,6 +1,7 @@
 package com.web.backweb.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.web.backweb.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,14 +24,17 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
+    private Integer order_status;
+
     //CONSTRUCTORS
 
     public Order() {
     }
 
-    public Order(Long id, Instant moment, User client) {
+    public Order(Long id, Instant moment, OrderStatus status, User client) {
         Id = id;
         this.moment = moment;
+        setStatus(status);
         this.client = client;
     }
 
@@ -50,6 +54,16 @@ public class Order implements Serializable {
 
     public void setMoment(Instant moment) {
         this.moment = moment;
+    }
+
+    public OrderStatus getStatus() {
+        return OrderStatus.ValueOf(order_status);
+    }
+
+    public void setStatus(OrderStatus status) {
+        if (status != null) {
+            this.order_status = status.getCode();
+        }
     }
 
     public User getClient() {
