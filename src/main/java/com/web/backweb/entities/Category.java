@@ -1,0 +1,70 @@
+package com.web.backweb.entities;
+
+import com.web.backweb.repositories.CategoryRepository;
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.Serializable;
+import java.util.Objects;
+
+@Entity
+@Table (name = "tb_Category")
+public class Category implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+    private String Name;
+
+    //CONSTRUCTORS
+
+    public Category () {}
+
+    public Category (Long Id, String Name) {
+        this.Id = Id;
+        this.Name = Name;
+    }
+
+    //GETS AND SETS
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    //HASH AND EQUALS
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(Id, category.Id) && Objects.equals(Name, category.Name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id, Name);
+    }
+
+    //toString
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "Id=" + Id +
+                ", Name='" + Name + '\'' +
+                '}';
+    }
+}
