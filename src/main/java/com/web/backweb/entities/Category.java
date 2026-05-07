@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table (name = "tb_Category")
@@ -16,6 +18,8 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String Name;
+
+    private Set<Product> products = new HashSet<>();
 
     //CONSTRUCTORS
 
@@ -42,6 +46,10 @@ public class Category implements Serializable {
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
     }
 
     //HASH AND EQUALS
