@@ -5,6 +5,7 @@ import com.web.backweb.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.nio.MappedByteBuffer;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
@@ -30,6 +31,9 @@ public class Order implements Serializable {
     private Set<OrderItem> items = new HashSet<>();
 
     private Integer order_status;
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     //CONSTRUCTORS
 
@@ -81,6 +85,14 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     //HASH AND EQUALS
