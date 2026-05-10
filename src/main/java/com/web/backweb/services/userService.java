@@ -4,6 +4,7 @@ import com.web.backweb.entities.User;
 import com.web.backweb.repositories.userRepository;
 import com.web.backweb.services.Exceptions.ResourceExceptionHandler;
 import com.web.backweb.services.Exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,15 +23,15 @@ public class userService {
     }
 
     public User findById(Long Id) {
-       Optional<User> obj = repository.findById(Id);
-       return obj.orElseThrow(() -> new ResourceNotFoundException(Id));
+        Optional<User> obj = repository.findById(Id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(Id));
     }
 
-    public User Insert (User obj) {
+    public User Insert(User obj) {
         return repository.save(obj);
     }
 
-    public void Delete (Long Id) {
+    public void Delete(Long Id) {
         repository.deleteById(Id);
     }
 
@@ -40,10 +41,15 @@ public class userService {
         entity.setPhone(obj.getPhone());
     }
 
-    public User Update (Long Id, User obj) {
-        User entity = repository.getReferenceById(Id);
-        updateData(entity, obj);
-        return repository.save(entity);
+    public User Update(Long Id, User obj) {
+        try {
+            User entity = repository.getReferenceById(Id);
+            updateData(entity, obj);
+            return repository.save(entity);
+        } 
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(Id);
+        }
     }
 
 }
