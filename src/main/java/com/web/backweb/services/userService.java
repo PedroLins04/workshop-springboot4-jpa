@@ -2,7 +2,10 @@ package com.web.backweb.services;
 
 import com.web.backweb.entities.User;
 import com.web.backweb.repositories.userRepository;
+import com.web.backweb.services.Exceptions.ResourceExceptionHandler;
+import com.web.backweb.services.Exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +23,7 @@ public class userService {
 
     public User findById(Long Id) {
        Optional<User> obj = repository.findById(Id);
-       return obj.get();
+       return obj.orElseThrow(() -> new ResourceNotFoundException(Id));
     }
 
     public User Insert (User obj) {
