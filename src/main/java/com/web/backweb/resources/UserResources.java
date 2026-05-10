@@ -44,4 +44,10 @@ public class UserResources {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value = "/{Id}")
+    public ResponseEntity<User> Update (@PathVariable Long Id,@RequestBody User obj ) {
+        obj = service.Update(Id, obj);
+        return ResponseEntity.ok().body(obj);
+    }
+
 }
