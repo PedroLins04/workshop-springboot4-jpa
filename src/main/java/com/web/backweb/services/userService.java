@@ -23,4 +23,8 @@ public class userService {
        return obj.get();
     }
 
+    public User Insert (User obj) {
+        return repository.save(obj);
+    }
+
 }
